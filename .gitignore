@@ -1,0 +1,14 @@
+# Build Artifacts
+*.o
+*.a
+*.so
+
+# Test Executables
+tests/test_tinyfs
+
+# Editor configs and caches
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
