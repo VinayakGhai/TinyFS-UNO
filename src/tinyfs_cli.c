@@ -212,20 +212,38 @@ static void cmd_stat(char *args) {
     }
 }
 
+/**
+ * @brief Format bytes into human-readable string.
+ *
+ * @param[in] bytes Number of bytes to format.
+ * @param[out] buf Buffer to store the formatted string (at least 16 bytes).
+ * @return Pointer to the formatted string.
+ */
+static char* format_bytes(uint16_t bytes, char *buf) {
+    if (bytes < 1024) {
+        sprintf(buf, "%d B", bytes);
+    } else {
+        sprintf(buf, "%.1f KB", bytes / 1024.0);
+    }
+    return buf;
+}
+
 static void cmd_statfs(void) {
     struct TFS_StatFS sfs;
     tfs_statfs(&sfs);
     
+    char buf[16];
+    
     cli_printf("Filesystem Statistics\n");
     cli_printf("---------------------\n");
-    cli_printf("Total EEPROM:      %4d B\n", sfs.total_eeprom);
-    cli_printf("Usable Log Sector: %4d B\n", sfs.usable_storage);
+    cli_printf("Total EEPROM:      %s\n", format_bytes(sfs.total_eeprom, buf));
+    cli_printf("Usable Log Sector: %s\n", format_bytes(sfs.usable_storage, buf));
     cli_printf("Active Files:      %4d\n", sfs.file_count);
-    cli_printf("Live User Data:    %4d B\n", sfs.live_data);
-    cli_printf("Metadata Overhead: %4d B\n", sfs.metadata_overhead);
-    cli_printf("Free Log Space:    %4d B\n", sfs.free_space);
-    cli_printf("Max Free Record:   %4d B\n", sfs.largest_free_record);
-    cli_printf("Compaction Margin: %4d B\n", sfs.compaction_headroom);
+    cli_printf("Live User Data:    %s\n", format_bytes(sfs.live_data, buf));
+    cli_printf("Metadata Overhead: %s\n", format_bytes(sfs.metadata_overhead, buf));
+    cli_printf("Free Log Space:    %s\n", format_bytes(sfs.free_space, buf));
+    cli_printf("Max Free Record:   %s\n", format_bytes(sfs.largest_free_record, buf));
+    cli_printf("Compaction Margin: %s\n", format_bytes(sfs.compaction_headroom, buf));
 }
 
 static void cmd_check(void) {
