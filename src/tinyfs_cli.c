@@ -15,10 +15,24 @@
 #include <string.h>
 #include <stdbool.h>
 
-static TFS_Print_Callback cli_print_cb = NULL;
-static char format_buf[128];
+#ifdef __AVR__
+#include <avr/pgmspace.h>
+#endif
 
-/* Internal print helper */
+static TFS_Print_Callback cli_print_cb = NULL;
+static char format_buf[80];
+
+#ifdef __AVR__
+static void cli_printf_p(const char *fmt_p, ...) {
+    if (!cli_print_cb) return;
+    va_list args;
+    va_start(args, fmt_p);
+    vsnprintf_P(format_buf, sizeof(format_buf), fmt_p, args);
+    va_end(args);
+    cli_print_cb(format_buf);
+}
+#define cli_printf(fmt, ...) cli_printf_p(PSTR(fmt), ##__VA_ARGS__)
+#else
 static void cli_printf(const char *fmt, ...) {
     if (!cli_print_cb) return;
     va_list args;
@@ -27,6 +41,7 @@ static void cli_printf(const char *fmt, ...) {
     va_end(args);
     cli_print_cb(format_buf);
 }
+#endif
 
 void tfs_cli_init(TFS_Print_Callback print_cb) {
     cli_print_cb = print_cb;
