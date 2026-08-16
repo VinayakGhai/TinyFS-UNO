@@ -1,6 +1,44 @@
-# TinyFS-UNO
+<p align="center">
+  <img src="docs/logo.jpg" alt="TinyFS-UNO Logo" width="480">
+</p>
 
-**TinyFS-UNO** is an educational, crash-consistent, wear-aware, integrity-checked log-structured filesystem designed specifically for the **Arduino Uno (ATmega328P)**'s internal 1 KB EEPROM.
+<h1 align="center">TinyFS-UNO</h1>
+
+<p align="center">
+  <em>A crash-consistent, wear-aware, integrity-checked log-structured filesystem for the Arduino Uno's internal 1 KB EEPROM.</em>
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <img src="https://img.shields.io/badge/Platform-Arduino_Uno_(ATmega328P)-00979D?logo=arduino&logoColor=white" alt="Platform">
+  <img src="https://img.shields.io/badge/Language-C99-555555?logo=c&logoColor=white" alt="Language">
+  <img src="https://img.shields.io/badge/Flash-14.3_KB_(44%25)-green" alt="Flash Usage">
+  <img src="https://img.shields.io/badge/SRAM-535_B_(26%25)-green" alt="SRAM Usage">
+  <a href="https://github.com/VinayakGhai/TinyFS-UNO/issues"><img src="https://img.shields.io/github/issues/VinayakGhai/TinyFS-UNO?color=orange" alt="Issues"></a>
+  <a href="https://github.com/VinayakGhai/TinyFS-UNO/stargazers"><img src="https://img.shields.io/github/stars/VinayakGhai/TinyFS-UNO?style=social" alt="Stars"></a>
+</p>
+
+<p align="center">
+  <strong>
+    <a href="#5-serial-cli-console-commands">CLI Commands</a> · 
+    <a href="docs/00_OVERVIEW.md">Documentation</a> · 
+    <a href="#6-host-side-testing--fault-injection">Testing</a> · 
+    <a href="CONTRIBUTING.md">Contributing</a>
+  </strong>
+</p>
+
+---
+
+### ✨ Highlights
+
+| | |
+|---|---|
+| 🔒 **Crash-Safe** | Trailing commit markers + CRC-16 — partial writes roll back automatically on reboot |
+| ⚡ **20 Bytes SRAM** | Filesystem context fits in 20 bytes; filenames are compared directly on EEPROM |
+| 🔁 **Wear-Leveling** | Log-structured append + ping-pong sector compaction distributes writes evenly |
+| 🧪 **12 Host Tests** | Fault injection at every byte boundary verifies power-loss recovery |
+| 🛡️ **Dual Superblocks** | Redundant metadata protects against write failures during sector switches |
+| 🖥️ **Interactive CLI** | Full serial console — `ls`, `cat`, `write`, `rm`, `check`, `health`, `benchmark` |
 
 > [!WARNING]
 > This project is an experimental/educational filesystem and should not be trusted with important data.
