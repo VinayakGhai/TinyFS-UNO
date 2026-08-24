@@ -1,3 +1,8 @@
+/**
+ * @file tinyfs_gc.h
+ * @brief TinyFS public API declarations.
+ */
+
 #ifndef TINYFS_GC_H
 #define TINYFS_GC_H
 
@@ -25,6 +30,7 @@ extern "C" {
  * 
  * Returns 0 on success, or a negative error code.
  */
+/** @brief tfs gc compact. */
 int tfs_gc_compact(uint16_t extra_needed);
 
 #ifdef __cplusplus

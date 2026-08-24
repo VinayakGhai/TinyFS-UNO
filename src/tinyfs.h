@@ -1,3 +1,8 @@
+/**
+ * @file tinyfs.h
+ * @brief TinyFS public API declarations.
+ */
+
 #ifndef TINYFS_H
 #define TINYFS_H
 
@@ -99,17 +104,22 @@ struct TFS_CheckReport {
 };
 
 /* Filesystem Core APIs */
+/** @brief tfs init. */
 int tfs_init(void);
 int tfs_mount(void);
 int tfs_format(void);
 int tfs_check(struct TFS_CheckReport *report);
+/** @brief tfs repair. */
 int tfs_repair(void);
 
 /* File Operations APIs */
 int tfs_write(const char *filename, const uint8_t *data, uint16_t len);
+/** @brief tfs read. */
 int tfs_read(const char *filename, uint8_t *buf, uint16_t len, uint16_t offset_bytes);
+/** @brief tfs delete. */
 int tfs_delete(const char *filename);
 bool tfs_exists(const char *filename);
+/** @brief tfs stat. */
 int tfs_stat(const char *filename, struct TFS_Stat *stat_out);
 int tfs_statfs(struct TFS_StatFS *statfs_out);
 
