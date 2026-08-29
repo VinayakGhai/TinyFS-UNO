@@ -102,7 +102,7 @@ static int parse_args(char *args, char *arg1_out, char *arg2_out, int max_len) {
     arg2_out[max_len - 1] = '\0';
     return 2;
 }
-
+static void cmd_rename(char *args);
 /* Command implementations */
 
 static void cmd_ls(void) {
@@ -142,7 +142,23 @@ static void cmd_write(char *args) {
         cli_printf("ERROR: Write failed (%d)\n", ret);
     }
 }
+static void cmd_rename(char *args) {
+    char old_name[16] = {0};
+    char new_name[16] = {0};
+    int parsed = parse_args(args, old_name, new_name, sizeof(old_name));
 
+    if (parsed < 2) {
+        cli_printf("Usage: rename <old_filename> <new_filename>\n");
+        return;
+    }
+
+    int ret = tfs_rename(old_name, new_name);
+    if (ret == 0) {
+        cli_printf("OK\n");
+    } else {
+        cli_printf("ERROR: Rename failed (%d)\n", ret);
+    }
+}
 static void cmd_cat(char *args) {
     char filename[16] = {0};
     int parsed = parse_args(args, filename, NULL, 16);
@@ -393,6 +409,8 @@ int tfs_cli_execute(const char *cmd_line) {
         cmd_write(args);
     } else if (strcmp(cmd, "cat") == 0) {
         cmd_cat(args);
+    } else if (strcmp(cmd, "rename") == 0) {
+        cmd_rename(args);
     } else if (strcmp(cmd, "rm") == 0) {
         cmd_rm(args);
     } else if (strcmp(cmd, "stat") == 0) {

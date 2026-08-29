@@ -119,6 +119,7 @@ int tfs_read(const char *filename, uint8_t *buf, uint16_t len, uint16_t offset_b
 /** @brief tfs delete. */
 int tfs_delete(const char *filename);
 bool tfs_exists(const char *filename);
+int tfs_rename(const char *old_filename, const char *new_filename);
 /** @brief tfs stat. */
 int tfs_stat(const char *filename, struct TFS_Stat *stat_out);
 int tfs_statfs(struct TFS_StatFS *statfs_out);

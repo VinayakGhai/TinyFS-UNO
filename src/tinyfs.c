@@ -466,3 +466,23 @@ int tfs_repair(void) {
     return tfs_mount();
 }
 
+int tfs_rename(const char *old_filename, const char *new_filename) {
+    if (tfs_find_active_file(old_filename, NULL) < 0) {
+        return -1;
+    }
+    if (tfs_find_active_file(new_filename, NULL) >= 0) {
+        return -1;
+    }
+
+    uint8_t buffer[256];
+    int bytes_read = tfs_read_file(old_filename, buffer, sizeof(buffer));
+    if (bytes_read < 0) return -1;
+
+    int write_res = tfs_write_file(new_filename, buffer, bytes_read);
+    if (write_res < 0) return -1;
+
+    int delete_res = tfs_delete_file(old_filename);
+    if (delete_res < 0) return -1;
+
+    return 0;
+}
