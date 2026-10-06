@@ -475,13 +475,13 @@ int tfs_rename(const char *old_filename, const char *new_filename) {
     }
 
     uint8_t buffer[256];
-    int bytes_read = tfs_read_file(old_filename, buffer, sizeof(buffer));
+    int bytes_read = tfs_read(old_filename, buffer, sizeof(buffer), 0);
     if (bytes_read < 0) return -1;
 
-    int write_res = tfs_write_file(new_filename, buffer, bytes_read);
+    int write_res = tfs_write(new_filename, buffer, bytes_read);
     if (write_res < 0) return -1;
 
-    int delete_res = tfs_delete_file(old_filename);
+    int delete_res = tfs_delete(old_filename);
     if (delete_res < 0) return -1;
 
     return 0;
