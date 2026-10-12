@@ -190,6 +190,20 @@ static void cmd_cat(char *args) {
     }
 }
 
+static void cmd_touch(char *args) {
+    char filename[16] = {0};
+    int parsed = parse_args(args, filename, NULL, 16);
+    if (parsed < 1) {
+	    cli_printf("Usage: touch <filename>\n");
+	    return;
+    }
+
+    int ret = tfs_touch(filename);
+    if (ret < 0) {
+	    cli_printf("ERROR : Failed to create file\n");
+    }
+}
+
 static void cmd_rm(char *args) {
     char filename[16] = {0};
     int parsed = parse_args(args, filename, NULL, 16);
@@ -411,6 +425,8 @@ int tfs_cli_execute(const char *cmd_line) {
         cmd_cat(args);
     } else if (strcmp(cmd, "rename") == 0) {
         cmd_rename(args);
+    } else if (strcmp(cmd, "touch") == 0) {
+	cmd_touch(args);
     } else if (strcmp(cmd, "rm") == 0) {
         cmd_rm(args);
     } else if (strcmp(cmd, "stat") == 0) {

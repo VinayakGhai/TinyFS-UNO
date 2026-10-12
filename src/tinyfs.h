@@ -118,6 +118,8 @@ int tfs_write(const char *filename, const uint8_t *data, uint16_t len);
 int tfs_read(const char *filename, uint8_t *buf, uint16_t len, uint16_t offset_bytes);
 /** @brief tfs delete. */
 int tfs_delete(const char *filename);
+/** @brief tfs touch. */
+int tfs_touch(const char *filename);
 bool tfs_exists(const char *filename);
 int tfs_rename(const char *old_filename, const char *new_filename);
 /** @brief tfs stat. */

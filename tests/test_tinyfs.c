@@ -640,7 +640,12 @@ static void test_cli_commands(void) {
     /* Test write */
     assert(tfs_cli_execute("write /cli_file \"hello_cli\"") == 0);
     assert(tfs_exists("/cli_file") == true);
-    
+
+    /* Test touch */
+    assert(tfs_cli_execute("touch /touch_file") == 0);
+    assert(tfs_exists("/touch_file") == true);
+    assert(tfs_cli_execute("touch /touch_file") == 0);
+
     /* Test ls */
     assert(tfs_cli_execute("ls") == 0);
     

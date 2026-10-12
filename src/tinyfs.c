@@ -240,6 +240,18 @@ int tfs_read(const char *filename, uint8_t *buf, uint16_t len, uint16_t offset_b
     return to_read;
 }
 
+int tfs_touch(const char *filename) {
+    uint8_t idx = 0;
+    int found = tfs_find_active_file(filename, &idx);
+    if (found < 0) {
+	    int ret = tfs_write(filename, NULL, 0); //Creating an empty file (0-byte payload)
+	    if (ret < 0) {
+		    return -1;
+	    }
+    }
+    return 0;
+}
+
 int tfs_delete(const char *filename) {
     uint8_t idx = 0;
     int found = tfs_find_active_file(filename, &idx);
